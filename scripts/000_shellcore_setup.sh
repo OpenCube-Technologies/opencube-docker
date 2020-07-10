@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 #####################################################################################################
 # Helper functions for installing, loading, and updating Privex ShellCore
-# Part of someguy123/steem-docker
-# Released under GNU AGPL by Someguy123
+# Part of https://github.com/OpenCube-Technologies/opencube-docker.git
+# Released under GNU AGPL by Open Cube Technologies
 #
-# Github: https://github.com/Someguy123/steem-docker
+# Github: https://github.com/OpenCube-Technologies/opencube-docker.git
 #
-# **Steem-in-a-box** is a toolkit for using the Steem Docker images[1] published by @someguy123.
+# Toolkit for using the OpenCube Docker images[1] published by OpenCube Technologies
 # It's purpose is to simplify the deployment of `steemd` nodes.
 #
 # For more information, see README.md - or run `./run.sh help`
 #
-# [1] https://hub.docker.com/r/someguy123/steem/tags/
 #
 #####################################################################################################
 
@@ -27,7 +26,7 @@ SIAB_LIB_LOADED[shellcoresetup]=1 # Mark this library script as loaded successfu
 
 
 # returns 0 if version $1 > $2
-#   if version_gt 1.1.0 1.0.0; then 
+#   if version_gt 1.1.0 1.0.0; then
 #     echo "version 1.1.0 is newer than 1.0.0"
 #   else
 #     echo "version 1.1.0 is older than 1.0.0"

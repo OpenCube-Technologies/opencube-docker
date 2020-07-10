@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 #####################################################################################################
 # Steem node manager
-# Released under GNU AGPL by Someguy123
+# Released under GNU AGPL by OpenCube Technologies
 #
-# Github: https://github.com/Someguy123/steem-docker
+# Github: https://github.com/OpenCube-Technologies/opencube-docker.git
 #
-# **Steem-in-a-box** is a toolkit for using the Steem Docker images[1] published by @someguy123.
+# **Steem-in-a-box** is a toolkit for using the Steem Docker images[1] published by @OpenCube Technologies.
 # It's purpose is to simplify the deployment of `steemd` nodes.
 #
 # For more information, see README.md - or run `./run.sh help`
@@ -68,7 +68,7 @@ error_control 2
 _ERROR_TRIGGERED=0
 _SIAB_HANDLE_EXIT=1
 
-print_traceback() { 
+print_traceback() {
     local trace_depth=1
     (( $# > 0 )) && trace_depth=$(($1))
     msgerr nots bold blue "\nTraceback:\n\n${RESET}${BOLD}$(trap_traceback $trace_depth)\n"
@@ -173,12 +173,12 @@ if [[ "$NETWORK" == "hive" ]]; then
 
     : ${NETWORK_NAME="Hive"}
     : ${SELF_NAME="Hive-in-a-box"}
-    
+
     : ${BC_HTTP="http://files.privex.io/hive/block_log.lz4"}        # HTTP or HTTPS url to grab the blockchain from. Set compression in BC_HTTP_CMP
     : ${BC_HTTP_RAW="http://files.privex.io/hive/block_log"}        # Uncompressed block_log over HTTP
     : ${BC_HTTP_CMP="lz4"}                                          # Compression type, can be "xz", "lz4", or "no" (for no compression)
     : ${BC_RSYNC="rsync://files.privex.io/hive/block_log"}          # Anonymous rsync daemon URL to the raw block_log
-    
+
     : ${ROCKSDB_RSYNC="rsync://files.privex.io/hive/rocksdb/"}      # Rsync URL for MIRA RocksDB files
 
     : ${DK_TAG_BASE="someguy123/hive"}
@@ -271,8 +271,8 @@ BUILD_VER=""        # Placeholder for BUILD_VER shared between functions
 #
 BUILD_ARGS=()
 
-# MSG_TS_DEFAULT controls whether timestamps are automatically added to any 
-# message that doesn't opt-out using 'nots', or whether messages need to 
+# MSG_TS_DEFAULT controls whether timestamps are automatically added to any
+# message that doesn't opt-out using 'nots', or whether messages need to
 # specify 'ts' to enable timestamps.
 # This allows timestamps to be temporarily disabled per function, preventing the need to
 # constantly add "nots".
@@ -330,7 +330,7 @@ siab_load_lib helpers docker stateshot
 if [[ ! -f "$CONF_FILE" ]]; then
     if [[ -f "$EXAMPLE_CONF" ]]; then
         echo "${YELLOW}File config.ini not found. copying example (seed)${RESET}"
-        cp -vi "$EXAMPLE_CONF" "$CONF_FILE" 
+        cp -vi "$EXAMPLE_CONF" "$CONF_FILE"
         echo "${GREEN} > Successfully installed example config for seed node.${RESET}"
         echo " > You may want to adjust this if you're running a witness, e.g. disable p2p-endpoint"
     else
@@ -344,7 +344,7 @@ fi
 if [[ ! -f "$MIRA_FILE" ]]; then
     if [[ -f "$EXAMPLE_MIRA" ]]; then
         echo "${YELLOW}File database.cfg not found. copying example ${RESET}"
-        cp -vi "$EXAMPLE_MIRA" "$MIRA_FILE" 
+        cp -vi "$EXAMPLE_MIRA" "$MIRA_FILE"
         echo "${GREEN} > Successfully installed example MIRA config.${RESET}"
         echo " > You may want to adjust this depending on your resources and type of node:"
         echo " - - > https://github.com/steemit/steem/blob/master/doc/mira.md"
@@ -377,7 +377,7 @@ done
 help() {
     echo "Usage: $0 COMMAND [DATA]"
     echo
-    echo "Commands: 
+    echo "Commands:
     start           - starts ${NETWORK_NAME} container
     stop            - stops ${NETWORK_NAME} container
     kill            - force stop ${NETWORK_NAME} container (in event of steemd hanging indefinitely)
@@ -388,7 +388,7 @@ help() {
 
     ver             - check version of ${SELF_NAME}, your ${NETWORK_NAME} docker image, and detect if any updates are available
 
-    fix-blocks      - downloads / repairs your blockchain, block index, and/or rocksdb. 
+    fix-blocks      - downloads / repairs your blockchain, block index, and/or rocksdb.
                       check '$0 fix-blocks help' for more info
 
     clean           - Remove blockchain, p2p, and/or shared mem folder contents (warns beforehand)
@@ -396,14 +396,14 @@ help() {
     dlblockindex    - download/repair just the block index (block_log.index)
     dlrocksdb       - download / replace RocksDB files - for use with MIRA-enabled ${NETWORK_NAME} images
 
-    shm_size        - resizes /dev/shm to size given, e.g. ./run.sh shm_size 10G 
+    shm_size        - resizes /dev/shm to size given, e.g. ./run.sh shm_size 10G
 
     install_docker  - install docker
     install         - pulls latest docker image from server (no compiling)
     install_full    - pulls latest (FULL NODE FOR RPC) docker image from server (no compiling)
     rebuild         - builds ${NETWORK_NAME} container (from docker file), and then restarts it
     build           - only builds ${NETWORK_NAME} container (from docker file)
-    
+
     logs            - show all logs inc. docker logs, and ${NETWORK_NAME} logs
 
     wallet          - open cli_wallet in the container
@@ -479,7 +479,7 @@ parse_build_args() {
         msg bold yellow " [!!] STEEM_SOURCE = ${STEEM_SOURCE}"
         BUILD_ARGS+=('--build-arg' "STEEM_SOURCE=${STEEM_SOURCE}")
     fi
-    
+
     msg blue " ++ CUSTOM BUILD SPECIFIED. Building from branch/tag ${BOLD}${BUILD_VER}"
     msg blue " ++ Tagging final image as: ${BOLD}${CUST_TAG}"
     msg yellow " -> Docker build arguments: ${BOLD}${BUILD_ARGS[@]}"
@@ -529,7 +529,7 @@ build() {
     !!! !!! !!! !!! !!! !!! READ THIS !!! !!! !!! !!! !!! !!!
     !!! !!! !!! !!! !!! !!! READ THIS !!! !!! !!! !!! !!! !!!
         For your safety, we've tagged this image as $CUST_TAG
-        To use it in this ${SELF_NAME}, run: 
+        To use it in this ${SELF_NAME}, run:
         ${GREEN}${BOLD}
         docker tag $CUST_TAG ${DOCKER_IMAGE}:latest
         ${RESET}${RED}
@@ -572,11 +572,11 @@ build_full() {
 }
 
 # Usage: ./run.sh dlblocks [override_dlmethod] [url] [compress]
-# Download the block_log from a remote server and de-compress it on-the-fly to save space, 
+# Download the block_log from a remote server and de-compress it on-the-fly to save space,
 # then places it correctly into $BC_FOLDER
 # Automatically attempts to resume partially downloaded block_log's using rsync, or http if
 # rsync is disabled in .env
-# 
+#
 #   override_dlmethod - use this to force downloading a certain way (OPTIONAL)
 #                     choices:
 #                       - rsync - download via rsync, resume if exists, using append-verify and ignore times
@@ -587,10 +587,10 @@ build_full() {
 #   url - Download/install block log using the supplied dlmethod from this url. (OPTIONAL)
 #
 #   compress -  Only valid for http/http-replace. Decompress the file on the fly. (OPTIONAL)
-#               options: xz, lz4, no (no compression) 
+#               options: xz, lz4, no (no compression)
 #               if a custom url is supplied, but no compression method, it is assumed it is raw and not compressed.
 #
-# Example: The default compressed lz4 download failed, but left it's block_log in place. 
+# Example: The default compressed lz4 download failed, but left it's block_log in place.
 # You don't want to use rsync to resume, because your network is very fast
 # Instead, you can continue your download using the uncompressed version over HTTP:
 #
@@ -604,7 +604,7 @@ dlblocks() {
     pkg_not_found rsync rsync
     pkg_not_found lz4 liblz4-tool
     pkg_not_found xz xz-utils
-    
+
     [[ ! -d "$BC_FOLDER" ]] && mkdir -p "$BC_FOLDER"
     [[ -f "$BC_FOLDER/block_log.index" ]] && msg "Removing old block index" && sudo rm -vf "$BC_FOLDER/block_log.index" 2> /dev/null
 
@@ -627,7 +627,7 @@ dlblocks() {
     fi
     msg "No existing block_log found. Will use standard http to download, and will\n also decompress lz4 while downloading, to save time."
     msg "If you encounter an error while downloading the block_log, just run dlblocks again,\n and it will use rsync to resume and repair it"
-    dl-blocks-http "$BC_HTTP" "$BC_HTTP_CMP" 
+    dl-blocks-http "$BC_HTTP" "$BC_HTTP_CMP"
     msg "FINISHED. Blockchain installed to ${BC_FOLDER}/block_log (make sure to check for any errors above)"
     msg red "If you encountered an error while downloading the block_log, just run dlblocks again\n and it will use rsync to resume and repair it"
     echo "Remember to resize your /dev/shm, and run with replay!"
@@ -745,7 +745,7 @@ fix-blocks-blocklog() {
         msg nots yellow " >> You can say no, and we'll continue with the next fix-blocks step."
         msg
 
-        # If AUTO_FIX_BLOCK_LOG is set to 1 (auto yes), but AUTO_IGNORE_EQUAL is also set to 1 (ignore equal size), 
+        # If AUTO_FIX_BLOCK_LOG is set to 1 (auto yes), but AUTO_IGNORE_EQUAL is also set to 1 (ignore equal size),
         # then we need to change _auto_fix to 2 (auto no), since the block_log is the same size as the remote server.
         local _auto_fix=$(($AUTO_FIX_BLOCKLOG))
         (( AUTO_FIX_BLOCKLOG == 1 )) && (( AUTO_IGNORE_EQUAL == 1 )) && _auto_fix=2
@@ -772,7 +772,7 @@ fix-blocks-index() {
     msg bold green " =                                                                      ="
     msg bold green " ========================================================================"
     msg
-    
+
 
     local local_idx="${BC_FOLDER}/block_log.index"
     (( $# > 0 )) && local_idx="$1"
@@ -836,7 +836,7 @@ _fix_blocks_help() {
     msg bold   "\t # Automatically attempt to repair block_log and block_log.index non-interactively, while skipping the RocksDB download/repair step."
     msg bold   "\t AUTO_FIX_BLOCKLOG=1 AUTO_FIX_BLOCKINDEX=1 AUTO_FIX_ROCKSDB=2 $0 fix-blocks"
     msg
-    msg yellow "If no blockchain component is specified (e.g. blocklog or index), fix-blocks will try to repair (with prompts) in order:" 
+    msg yellow "If no blockchain component is specified (e.g. blocklog or index), fix-blocks will try to repair (with prompts) in order:"
     msg
     msg yellow "    - block_log"
     msg yellow "    - block_log.index"
@@ -864,7 +864,7 @@ _fix_blocks_help() {
     msg green "                       When set to 1:   Do not attempt to verify/repair the block_log if it's the same size as the remote server"
     msg green "                       When set to 0:   Always verify/repair the block_log, even when it's the same size as the remote server"
     msg
-    
+
     msg
     msg bold green "Available fix-blocks actions and descriptions"
     msg
@@ -892,23 +892,23 @@ fix-blocks() {
             help|HELP|--help|-h|-?)
                 _fix_blocks_help
                 return $?;;
-            
+
             blocklog|blocks|block_log|blockchain)
                 fix-blocks-blocklog
                 return $?;;
-            
+
             index|blockindex|block_index|block_log.index)
                 fix-blocks-index
                 return $?;;
-            
+
             rocks*|mira|MIRA)
                 fix-blocks-rocksdb
                 return $?;;
-            
+
             all)
                 echo
                 ;;
-            
+
             *)
                 msg bold red "\n[!!!] Invalid option '$1' ...\n"
                 msg red " > Displaying fix-blocks help."
@@ -918,7 +918,7 @@ fix-blocks() {
                 ;;
 
         esac
-    fi      
+    fi
     msg
     fix-blocks-blocklog "$local_bl"
     msg "\n"
@@ -947,7 +947,7 @@ insert_env() {
     if [[ ! -f "$env_file" ]]; then
         msg yellow " [...] File '$env_file' does not exist. Creating it."
 
-        # Check if we 
+        # Check if we
         if ! ( [[ -w "$env_dir" ]] && [[ -x "$env_dir" ]] ) && ! can_write "$env_dir"; then
             msg bold red " [!!!] ERROR: Your user does not have permission to write to '$env_dir'"
             if ! sudo -n ls >/dev/null; then
@@ -1008,7 +1008,7 @@ _foldersync-fresh() {
 }
 
 _dlrocksdb() {
-    local url="$ROCKSDB_RSYNC" out_dir="$SHM_DIR" 
+    local url="$ROCKSDB_RSYNC" out_dir="$SHM_DIR"
     # rdb_folder_existed is changed to 1 if we detect existing RocksDB files
     # used to decide whether we need to ignore timestamps + use rsync checksumming
     local rdb_folder_existed=0
@@ -1116,7 +1116,7 @@ _SILENCE_RDB_INTRO=0
 # NOTE: if SHM_DIR contains "/dev/shm" - function will recommend changing this to "$DATADIR/rocksdb"
 # Disable this by setting "RDB_IGNORE_SHM=1"
 #
-# example: 
+# example:
 #   ./run.sh dlrocksdb "rsync://files.privex.io/steem/rocksdb/" "/steem/data/rocksdb/"
 #
 dlrocksdb() {
@@ -1128,10 +1128,10 @@ dlrocksdb() {
         msg bold green " #                                                                                          # "
         msg bold green " #                          Steem-in-a-Box RocksDB Downloader                               # "
         msg bold green " #                                                                                          # "
-        msg bold green " #                   (C) 2020 Someguy123 - https://steempeak.com/@someguy123                # "
+        msg bold green " #                   (C) 2020 OpenCube Technologies - https://steempeak.com/@OpenCube Technologies                # "
         msg bold green " #                                                                                          # "
         msg bold green " #                                                                                          # "
-        msg bold green " #    SRC: github.com/Someguy123/steem-docker                                               # "
+        msg bold green " #    SRC: github.com/Someguy123/opencube-docker                                               # "
         msg bold green " #                                                                                          # "
         msg bold green " #    Fast and easy download + installation of RocksDB files from Privex Inc.               # "
         msg bold green " #                                                                                          # "
@@ -1230,7 +1230,7 @@ custom-dlblocks() {
             ;;
         http)
             dl-blocks-http "$url" "$compress"
-            return $? 
+            return $?
             ;;
         http-replace)
             msg yellow " -> Removing old block_log..."
@@ -1243,7 +1243,7 @@ custom-dlblocks() {
             msg red "Valid options are http, http-replace, rsync, or rsync-replace"
             return 1
             ;;
-    esac 
+    esac
 }
 
 # Internal use
@@ -1264,7 +1264,7 @@ dl-blocks-rsync() {
         msg bold red "An error occurred while downloading the blockchain via rsync... please check above for errors"
         return $ret
     fi
-    
+
     msg bold green " (+) FINISHED. Blockchain downloaded via rsync (make sure to check for any errors above)"
 
     msg green " [+] Downloading block_log.index from ${url}.index"
@@ -1301,13 +1301,13 @@ dl-blocks-http() {
         echo -e "${BOLD}Compression:${RESET}\t\t$compression"
     echo -e "===============================================================\n"
 
-    if [[ "$compression" != "no" ]]; then 
+    if [[ "$compression" != "no" ]]; then
         msg bold green " -> Downloading and de-compressing block log on-the-fly..."
     else
         msg bold green " -> Downloading raw block log..."
     fi
 
-    case "$compression" in 
+    case "$compression" in
         lz4)
             wget "$url" -O - | lz4 -dv - "$BC_FOLDER/block_log"
             ;;
@@ -1327,7 +1327,7 @@ dl-blocks-http() {
 
     msg bold green " [+] Downloading block_log.index from ${BC_HTTP_RAW}.index"
     wget -c "${BC_HTTP_RAW}.index" -O "${BC_FOLDER}/block_log.index"
-    
+
     ret=$?
     if (( ret != 0 )); then
         msg bold red "An error occurred while downloading the block index via HTTP... please check above for errors"
@@ -1344,7 +1344,7 @@ install_docker() {
     # curl/git used by docker, xz/lz4 used by dlblocks, jq used by tslogs/pclogs
     sudo apt install curl git xz-utils liblz4-tool jq
     curl https://get.docker.com | sh
-    if [ "$EUID" -ne 0 ]; then 
+    if [ "$EUID" -ne 0 ]; then
         echo "Adding user $(whoami) to docker group"
         sudo usermod -aG docker $(whoami)
         echo "IMPORTANT: Please re-login (or close and re-connect SSH) for docker to function correctly"
@@ -1352,13 +1352,13 @@ install_docker() {
 }
 
 # Usage: ./run.sh install [tag]
-# Downloads the Steem low memory node image from someguy123's official builds, or a custom tag if supplied
+# Downloads the Steem low memory node image from OpenCube Technologies's official builds, or a custom tag if supplied
 #
 #   tag - optionally specify a docker tag to install from. can be third party
 #         format: user/repo:version    or   user/repo   (uses the 'latest' tag)
 #
 # If no tag specified, it will download the pre-set $DK_TAG in run.sh or .env
-# Default tag is normally someguy123/steem:latest (official builds by the creator of steem-docker).
+# Default tag is normally OpenCube Technologies/steem:latest (official builds by the creator of opencube-docker).
 #
 install() {
     if (( $# == 1 )); then
@@ -1385,11 +1385,11 @@ install() {
 
 # Usage: ./run.sh install_full
 # Downloads the Steem full node image from the pre-set $DK_TAG_FULL in run.sh or .env
-# Default tag is normally someguy123/steem:latest-full (official builds by the creator of steem-docker).
+# Default tag is normally someguy123/steem:latest-full (official builds by the creator of opencube-docker).
 #
 install_full() {
     msg yellow " -> Loading image from ${DK_TAG_FULL}"
-    docker pull "$DK_TAG_FULL" 
+    docker pull "$DK_TAG_FULL"
     msg green " -> Tagging as steem"
     docker tag "$DK_TAG_FULL" steem
     msg bold green " -> Installation completed. You may now configure or run the server"
@@ -1459,7 +1459,7 @@ replay() {
             echo $GREEN"Did not say 'y'. Quitting."$RESET
             return
         fi
-    fi 
+    fi
     msg yellow " -> Removing old container '${DOCKER_NAME}'"
     docker rm $DOCKER_NAME
     if (( $# > 0 )); then
@@ -1487,7 +1487,7 @@ memory_replay() {
 		echo $GREEN"Did not say 'y'. Quitting."$RESET
 		return
 	fi
-    fi 
+    fi
     echo "Removing old container"
     docker rm $DOCKER_NAME
     echo "Running steem with --memory-replay..."
@@ -1540,7 +1540,7 @@ enter() {
 }
 
 # Usage: ./run.sh shell
-# Runs the container similar to `run` with mounted directories, 
+# Runs the container similar to `run` with mounted directories,
 # then opens a BASH shell for debugging
 # To avoid leftover containers, it uses `--rm` to remove the container once you exit.
 #
@@ -1563,7 +1563,7 @@ wallet() {
 #
 # By default, it will connect to wss://steemd.privex.io:443 (ws = normal websockets, wss = secure HTTPS websockets)
 # See this link for a list of WSS nodes: https://www.steem.center/index.php?title=Public_Websocket_Servers
-# 
+#
 #    wss_server - a custom websocket server to connect to, e.g. ./run.sh remote_wallet wss://rpc.steemviz.com
 #
 remote_wallet() {
@@ -1640,10 +1640,10 @@ clean-logs() {
 # Usage: ./run.sh tslogs
 # (warning: may require root to work properly in some cases)
 # Shows the Steem logs, but with UTC timestamps extracted from the docker logs.
-# Scans and follows a large portion of your steem logs, filters out useless data, and appends a 
+# Scans and follows a large portion of your steem logs, filters out useless data, and appends a
 # human readable timestamp on the left. Time is normally in UTC, not your local. Example:
 #
-#   2018-12-09T01:04:59 p2p_plugin.cpp:212            handle_block         ] Got 21 transactions 
+#   2018-12-09T01:04:59 p2p_plugin.cpp:212            handle_block         ] Got 21 transactions
 #                   on block 28398481 by someguy123 -- Block Time Offset: -345 ms
 #
 tslogs() {
@@ -1721,7 +1721,7 @@ ver() {
 
 
     ####
-    # Print out the current branch, commit and check upstream 
+    # Print out the current branch, commit and check upstream
     # to return commits that can be pulled
     ####
     echo "${BLUE}Current Steem-in-a-box version:${RESET}"
@@ -1809,7 +1809,7 @@ ver() {
         # Truncate the long SHA256 sum to the standard 12 character image ID
         container_image_id="${_container_image_id:7:12}"
         echo "    Container $DOCKER_NAME is running on docker image ID ${container_image_id}"
-        # If the docker image check was successful earlier, then compare the image to the current container 
+        # If the docker image check was successful earlier, then compare the image to the current container
         if [[ "$got_dkimg" == 1 ]]; then
             if [[ "$container_image_id" == "$dkimg_id" ]]; then
                 echo "    ${GREEN}Container $DOCKER_NAME is running image $container_image_id, which matches steem:latest ($dkimg_id)"
@@ -1838,11 +1838,11 @@ ver() {
 # Usage: ./run.sh start
 # Very simple status display, letting you know if the container exists, and if it's running.
 status() {
-    
+
     if seed_exists; then
         echo "Container exists?: "$GREEN"YES"$RESET
     else
-        echo "Container exists?: "$RED"NO (!)"$RESET 
+        echo "Container exists?: "$RED"NO (!)"$RESET
         echo "Container doesn't exist, thus it is NOT running. Run '$0 install && $0 start'"$RESET
         return
     fi
@@ -1889,7 +1889,7 @@ siab-monitor() {
     msg nots bold green "After the first check, we'll also output how many blocks have been synced so far, as well as"
     msg nots bold green "the estimated blocks per second (BPS) that your node is syncing by.\n"
     msg nots bold yellow "NOTE: This will not work with a replaying node. Only with a node which is synchronising.\n"
-    
+
     msg nots "$_LN"
 
 
@@ -1969,7 +1969,7 @@ siab-monitor() {
                 sleep "$MONITOR_INTERVAL"
                 continue
             fi
-            
+
             msg
         fi
         msg nots "$_LN"
@@ -1991,7 +1991,7 @@ siab-monitor() {
 sb_clean() {
     bc_dir="${DATADIR}/witness_node_data_dir/blockchain"
     p2p_dir="${DATADIR}/witness_node_data_dir/p2p"
-    
+
     # To prevent the risk of glob problems due to non-existant folders,
     # we re-create them silently before we touch them.
     mkdir -p "$bc_dir" "$p2p_dir" "$SHM_DIR" &> /dev/null
@@ -2000,7 +2000,7 @@ sb_clean() {
     msg yellow " :: P2P files:            $p2p_dir"
     msg yellow " :: Shared Mem / Rocksdb: $SHM_DIR"
     msg
-    
+
     if (( $# == 1 )); then
         case $1 in
             sh*)
@@ -2047,7 +2047,7 @@ sb_clean() {
     else
         msg yellow " >> Not clearing blockchain folder."
     fi
-    
+
     read -p "Do you want to remove the p2p files? (y/n) > " cleanp2p
     if [[ "$cleanp2p" == "y" ]]; then
         msg bold red " !!! Clearing p2p files..."
@@ -2057,7 +2057,7 @@ sb_clean() {
     else
         msg yellow " >> Not clearing p2p folder."
     fi
-    
+
     read -p "Do you want to remove the shared memory / rocksdb files? (y/n) > " cleanshm
     if [[ "$cleanshm" == "y" ]]; then
         msg bold red " !!! Clearing shared memory files..."
@@ -2102,7 +2102,7 @@ publish() {
     esac
 
     V="$2"
-    
+
     : ${MAIN_TAG="someguy123/steem:$V"}
     [[ "$MKMIRA" == "mira" ]] && SECTAG="latest-mira" || SECTAG="latest"
     (( $# > 2 )) && SECTAG="$3"

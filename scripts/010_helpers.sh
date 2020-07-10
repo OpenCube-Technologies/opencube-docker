@@ -3,7 +3,7 @@
 # Steem node manager
 # Released under GNU AGPL by Someguy123
 #
-# Github: https://github.com/Someguy123/steem-docker
+# Github: https://github.com/OpenCube-Technologies/opencube-docker.git
 #
 # This file contains various small functions to avoid cluttering up run.sh
 #
@@ -31,7 +31,7 @@ rfc_datetime() {
 }
 OS_NAME="$(uname -s)"
 
-# date_to_seconds [date_time] 
+# date_to_seconds [date_time]
 # for most reliable conversion, pass date/time in ISO format:
 #       2020-02-28T20:08:09   (%Y-%m-%dT%H:%M:%S)
 # e.g.

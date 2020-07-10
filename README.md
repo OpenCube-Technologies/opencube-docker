@@ -1,6 +1,4 @@
-# Steem-in-a-box by @someguy123
-
-**Steem-in-a-box** is a toolkit for using the Steem [docker images](https://hub.docker.com/r/someguy123/steem/tags/) published by @someguy123.
+# Open Cube Docker
 
 It's purpose is to simplify the deployment of `steemd` nodes.
 
@@ -8,23 +6,20 @@ Features:
 
  - Automatic docker installer
  - Easily update Steem (steemd, cli_wallet etc.) with binary images
- - Easily build your own new versions of Steem by editing the docker files
+ - Easily build your own new versions of OpenCube by editing the docker files
  - Single command to download and install block_log from gtg's server
  - Easily adjust /dev/shm size
  - Automatically forwards port 2001 for seeds
  - Automatically installs a working example configuration for seeds, which can easily be customized for witnesses and full nodes
  - Quick access to common actions such as start, stop, replay, rebuild, local wallet, remote wallet, and much more
- - Constantly maintained by a top 20 Steem witness (@someguy123) - updated docker images are often available within 24 hours of version release
 
- 
- 
 # Usage
 
 To install a witness or seed node:
 
 ```bash
-git clone https://github.com/someguy123/steem-docker.git
-cd steem-docker
+git clone https://github.com/OpenCube-Technologies/opencube-docker.git
+cd opencube--docker
 # If you don't already have a docker installation, this will install it for you
 ./run.sh install_docker
 
@@ -59,7 +54,7 @@ sysctl -w vm.swappiness=1
 ./run.sh start
 ```
 
-You may want to persist the /dev/shm size (shared memory) across reboots. To do this, you can edit `/etc/fstab`, please be very careful, as any mistakes in this file will cause your system to become unbootable.
+You may want to persist the /dev/shm size (shared memory) across reboots. To do this, you can edit `/etc/fstab`, please be very careful, as any mistakes in this file will cause your system to become un-bootable.
 
 Simply add this to the bottom of the file on a new line. Be sure not to damage any other lines in the file. Adjust "64G" to whatever size you would like /dev/shm to be.
 
@@ -86,11 +81,7 @@ docker network connect rpc_default nginx
 
 Nginx will now be able to access the container RPC1 via `http://rpc1:8090` (assuming 8090 is the RPC port in your config). Then you can set up SSL and container port forwarding as needed for nginx.
 
-# Updating your Steem node
-
-To update to a newer version of Steem, first check [@someguy123's docker hub](https://hub.docker.com/r/someguy123/steem/tags/) to see if a new version of Steem is uploaded. Low memory mode (witness/seed) images are tagged like "v0.20.0", while full node images are tagged as "v0.20.0-full". 
-
-Security updates may not be tagged under a specific version, instead `latest`/`latest-full` will simply show a newer "Last Updated" on docker hub.
+# Updating your node
 
 If there is a new version available, then you can update using the following (be warned, a replay is needed in many cases):
 
@@ -102,7 +93,7 @@ git pull
 
 **If you're updating a full node, please remember to use `install_full` instead of install.**
 
-If you experience issues during restart, try running replay instead. You may also want to check [@someguy123's steemit](https://steemit.com/@someguy123) for any special update instructions, such as config changes.
+If you experience issues during restart, try running replay inst
 
 # Checking the status of your node
 
@@ -128,7 +119,6 @@ Anything which is not set in .env will fall back to a default value specified at
 
 The most common .env which is recommended for witnesses is the following:
 
-
 ```
 DOCKER_NAME=witness
 PORTS=
@@ -151,13 +141,13 @@ Full list of possible configuration options:
 
 Full list of `./run.sh` commands:
 
- - **start** - start a stopped steem-docker instance
- - **stop** - shutdown a steem-docker instance
- - **restart** - restart a steem-docker instance (will also start it if it's already stopped)
+ - **start** - start a stopped opencube-docker instance
+ - **stop** - shutdown a opencube-docker instance
+ - **restart** - restart a opencube-docker instance (will also start it if it's already stopped)
  - **wallet** - connect to the local container wallet
  - **remote_wallet** - connect to a remote wallet (default is wss://steemd.privex.io - @privex load balancer)
    - be aware, due to the way load balancing works, this may raise an error at first. just run it again a few times and eventually it will connect. note that external servers often have a 60 second connection limit, so you may be disconnected within 60 seconds.
- - **replay** - replay a steem-docker instance (run `stop` first) 
+ - **replay** - replay a opencube-docker instance (run `stop` first) 
  - **dlblocks** - download blocks from gtg (gandalf)'s block log server and install them into the blockchain directory
  - **shm_size (size)** - change the size of /dev/shm, e.g. `./run.sh shm_size 64G` for 64 gigabytes
  - **install** - install or update the steem docker image from docker hub
@@ -167,13 +157,7 @@ Full list of `./run.sh` commands:
  - **logs** - display the logs of the container with automatic follow. press ctrl-c to exit
  - **enter** - open a bash prompt inside of the container for debugging
 
-# Steemit Post
-
-Steemit Post for installing HF19: https://steemit.com/steem/@someguy123/your-guide-to-setting-up-a-witness-server-steem-in-a-box-hf19
-
 # LICENSE
-
-Steem-in-a-box and the associated docker images were built by @someguy123 ([github](https://github.com/someguy123) [steemit](https://steemit.com/@someguy123) [twitter](https://twitter.com/@compgenius999))
 
 GNU Affero General Public License v3.0
 
